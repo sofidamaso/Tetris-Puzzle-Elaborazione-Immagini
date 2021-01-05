@@ -2,13 +2,14 @@
 %output: immagine binaria
 function out_seg = label_segmentation(im)
     trYCbCr = rgb2ycbcr(im);
-
+    trHSV = rgb2hsv(im);
     %segmento per media cb e cr
     %problema quanta tolleranza lasciare in questa funzione
     seg = threshYCbCrMean(trYCbCr);
-
+    segs = threshSMean(trHSV);
     seg = (seg-1).*-1;
-    
+    segs = (segs-1).*-1;
+    seg = seg+segs;
     %qui è la segmentazione "vecchia"
     %faccio prima opening poi dilate
     segod = imdilate(imopen(seg,strel('diamond',11)),strel('disk',25));
