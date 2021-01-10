@@ -1,7 +1,6 @@
 %{
     COPY_PASTE
-
-    Usiamo le nozioni di centroide, convex hull.
+    
     Assumiamo che il tetramino sia già ruotato nella maniera corretta.
     Assumiamo che le immagini di input abbiano le stesse dimensioni.
 
