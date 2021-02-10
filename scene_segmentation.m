@@ -30,4 +30,6 @@ function out_image = scene_segmentation(im)
        
        %serve per riempire i buchi creati da sauvola nei pezzi neri
        out_image = imfill(out_image,'holes');
+       
+       out_image = imopen(out_image,strel('disk',15));
 end
