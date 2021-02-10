@@ -39,8 +39,8 @@ function signatures = get_signatures(label_image)
         max_value = max(max(distances));
         min_value = min(min(distances));
         % trovo tutti i picchi non vicini (almeno lontani 5) e che abbiano valore
-        % almeno del 90% del max
-        [peaks,locs] = findpeaks(distances,'MinPeakDistance',5,'MinPeakHeight',max_value*0.90);
+        % almeno del 70% del max
+        [peaks,locs] = findpeaks(distances,'MinPeakDistance',5,'MinPeakHeight',max_value*0.70);
 
         norm_distances = zeros(size(locs,1),size(distances,1));
         
