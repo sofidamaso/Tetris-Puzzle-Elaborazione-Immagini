@@ -30,12 +30,28 @@ function signatures = get_signatures(label_image)
         %calcolo distanza
         distances = sqrt((x - centroid_x).^2 + (y - centroid_y).^2);  
         
-        % ricampiono il vettore distanza per avere circa 100 elementi
-        % (ho messo 100 a caso possiamo cambiare guardando quanto ci è
-        % lunga la classificazione)
-        s = size(distances,1);
-        distances= distances(1:floor(s/100):end);
+        % ricampiono il vettore distanza per avere esattamente 100 elementi
+        % ho usato l'interpolazione
+        s = size(distances,1)/100;
+     
+        for r = 1 : 100
+            k = r*s;
+            floor_r = floor(k);
+            ceil_r =  ceil(k);
+            if floor_r < 1
+                floor_R = 1;
+            end
+            if ceil_r > size(distances,1)
+                ceil_r = size(distances,1);
+            end
+            floor_value = distances(floor_r);
+            ceil_value = distances(ceil_r);
+            molt_floor = ceil_r - k;
+            molt_ceil = 1-molt_floor;
+            tmp_distance(r,1) = floor_value*molt_floor + ceil_value*molt_ceil; 
+        end
         
+        distances = tmp_distance;
         max_value = max(max(distances));
         min_value = min(min(distances));
         % trovo tutti i picchi non vicini (almeno lontani 5) e che abbiano valore
