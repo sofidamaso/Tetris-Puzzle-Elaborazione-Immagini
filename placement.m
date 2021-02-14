@@ -1,6 +1,7 @@
 %{
     PLACEMENT
 
+    Posiziona i tetramini sull'immagine dello schema.
     Assumiamo che le immagini di input abbiano le stesse dimensioni.
 
     input:
@@ -14,20 +15,21 @@
 
         1. calcoliamo le aree degli oggetti delle maschere (a_scene, a_scheme)
 
-        2. Troviamo il rapporto tra a_scene e a_scheme (scale)
+        2. troviamo il rapporto tra a_scene e a_scheme (scale)
            ridimensioniamo scene e mask_scene
 
-        3. calcoliamo i centroidi degli oggetti delle maschere (c_scene, c_scheme)
+        3. calcoliamo gli angoli di rotazione degli oggetti delle maschere
+           calcoliamo i possibili angoli di rotazione di mask_scene
+
+        4. troviamo quale delle maschere di scena ruotatate fitta meglio
+           ruotiamo scene e mask_scene
 
         4. calcoliamo la distanza c_scene - c_scheme (d)
-           trasliamo mask_scene
-           trasliamo scene
+           trasliamo scene e mask_scene
 
         5. rotazione
-        
-        6. croppiamo scene e mask_scene
 
-        7. copiamo e incolliamo il tetramino sull'immagine
+        6. copiamo e incolliamo il tetramino sull'immagine
 %}
 
 function out = placement(scene,scheme,mask_scene,mask_scheme)
@@ -53,28 +55,47 @@ if scale < 1 % controllo su scena più piccola dello schema
     scene = tmp_scene;
     mask_scene = logical(tmp_mask_scene);
     
-    clear tmp_scene;
-    clear tmp_mask_scene;
-
-end
-
-% rotazione
-
-% 
-% % calcoliamo i centroidi 
-% c_scene = int32(compute_centroid(mask_scene));
-% c_scheme = int32(compute_centroid(mask_scheme));
-% 
-% % traslazione affinché c_scene == c_scheme
-% d = c_scheme - c_scene;
-% mask_scene = imtranslate(mask_scene,d);
-% scene = imtranslate(scene,d);
-
-% crop
-if scale > 1
+elseif scale > 1 % sistemare il crop in modo che parta dal centroide
     mask_scene = mask_scene(1:size(scheme,1), 1:size(scheme,2));
     scene = scene(1:size(scheme,1), 1:size(scheme,2), 1:3);
 end
+
+% calcoliamo gli angoli
+scene_props = bwferet(mask_scene,'MaxFeretProperties');
+scheme_props = bwferet(mask_scheme,'MaxFeretProperties');
+
+scene_angle = scene_props.MaxAngle;
+scheme_angle = scheme_props.MaxAngle;
+
+angle = scheme_angle - scene_angle; 
+
+% calcoliamo la rotazione
+c_scheme = int32(compute_centroid(mask_scheme));
+
+rotations = zeros(4,1);
+
+for i = 0:3
+    
+    tmp = imrotate(mask_scene,-angle-(90*i),'crop');
+    c_tmp = int32(compute_centroid(tmp));
+    d = c_scheme - c_tmp;
+    tmp = imtranslate(tmp,d);
+
+    rotations(i+1) = sum(sum(mask_scheme | not(tmp)));
+
+end
+
+i = find(rotations == max(rotations))-1;
+
+mask_scene = imrotate(mask_scene,-angle-(90*i),'crop');
+scene = imrotate(scene,-angle-(90*i),'crop');
+
+% traslazione
+c_scene = int32(compute_centroid(mask_scene));
+
+d = c_scheme - c_scene;
+mask_scene = imtranslate(mask_scene,d);
+scene = imtranslate(scene,d);
 
 % copia e incolla
 red = scene(:,:,1) .* mask_scene; 
@@ -94,19 +115,26 @@ out = cat(3,red,green,blue);
 end
 
 %{
-    Per visualizzare le imamgini con i centroidi:
+    VISUALIZZARE LE IMMAGINI CON I CENTROIDI
 
     imshow(img);
     hold(imgca,'on');
     plot(centroid(:,1), centroid(:,2), 'r*');
+
+    
+    
+    VISUALIZZARE LE IMMAGINI CON GLI ASSI
+    
+    maxLabel = max(mask(:));
+
+    h = imshow(mask,[]);
+    axis = h.Parent;
+    for labelvalues = 1:maxLabel
+        xmax = [props.MaxCoordinates{labelvalues}(1,1) props.MaxCoordinates{labelvalues}(2,1)];
+        ymax = [props.MaxCoordinates{labelvalues}(1,2) props.MaxCoordinates{labelvalues}(2,2)];
+        imdistline(axis,xmax,ymax);
+    end
+    title(axis,'Maximum Feret Diameter of Objects');
+    colorbar('Ticks',1:maxLabel)  
+
 %}
-
-% scene = im2double(imread('scene/P04.jpg'));
-% scheme = im2double(imread('schemi/S03.jpg'));
-% mask_scene = im2bw(im2gray(imread('maschere_gt/P04-gt.jpg')));
-% mask_scheme = im2bw(im2gray(imread('maschere_gt/S03-gt.jpg')));
-
-% scene = im2double(imread('scene/P11.jpg'));
-% scheme = im2double(imread('schemi/S01.jpg'));
-% mask_scene = im2bw(im2gray(imread('maschere_gt/P11-gt.jpg')));
-% mask_scheme = im2bw(im2gray(imread('maschere_gt/S01-gt.jpg')));
