@@ -38,4 +38,7 @@ mask = imfill(mask,'holes');
 
 mask = imopen(mask,strel('disk',15));
 
+size_thresh = floor((size(mask,1)*size(mask,2))*0.005);
+
+mask = bwareaopen(mask,size_thresh);
 end
