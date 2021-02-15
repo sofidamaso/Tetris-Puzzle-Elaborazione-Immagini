@@ -1,6 +1,8 @@
 %{ 
-Rilevamento delle ombre. Prende in input il canale V di un'immagine e 
-restituisce una maschera. Utilizza Sauvola. 
+    SHADOW_MASK
+
+    Rilevamento delle ombre. Prende in input il canale V di un'immagine e 
+    restituisce una maschera. Utilizza Sauvola. 
 %}
 
 function mask = shadow_mask(V)
