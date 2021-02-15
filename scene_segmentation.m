@@ -1,6 +1,5 @@
 %{
     SCENE_SEGMENTATION
-
     Segmenta la scena tramite la media dei canali H, Cb e Cr.
     
     Input: immagine di scena
@@ -10,11 +9,12 @@
 function mask = scene_segmentation(img)
     
 %valori calcolati dalle immagini di training per il background
-h_mean = 0.08825;
+%h_mean = 0.08825;
 cb_mean = 0.425; 
 cr_mean = 0.5674;
 
-mask = threshHCbCrEuclidean(img,h_mean,cb_mean,cr_mean,0.035);
+%mask = threshHCbCrEuclidean(img,h_mean,cb_mean,cr_mean,0.035);
+mask = threshCbCrEuclidean(img,cb_mean,cr_mean,0.035);
 
 %serve a "chiudere" le forme che rimangono aperte (es i rettangoli
 %bianchi in alcunu casi)
