@@ -32,7 +32,7 @@
         6. copiamo e incolliamo il tetramino sull'immagine
 %}
 
-function out = placement2(scene,scheme,scene_mask,scheme_mask)
+function out = placement(scene,scheme,scene_mask,scheme_mask)
 
 % calcoliamo le aree degli oggetti delle maschere
 a_scene = sum(scene_mask, 'all');
