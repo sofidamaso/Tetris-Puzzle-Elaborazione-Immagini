@@ -18,7 +18,7 @@ function mask = scene_segmentation(img)
 
 R_ycbcr = rgb2ycbcr(im2double(img));
 
-sfondo = im2double(imread('sfondo.png'));
+sfondo = im2double(imread('training/sfondo.png'));
 sfondo_ycbcr = rgb2ycbcr(sfondo);
 
 [r,c,ch] = size(sfondo_ycbcr);
