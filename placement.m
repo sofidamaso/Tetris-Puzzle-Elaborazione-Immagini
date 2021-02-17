@@ -18,16 +18,14 @@
         2. troviamo il rapporto tra a_scene e a_scheme (scale)
            ridimensioniamo scene e scene_mask
 
-        3. calcoliamo gli angoli di rotazione degli oggetti delle maschere
-           calcoliamo i possibili angoli di rotazione di scene_mask
+        3. calcoliamo gli angoli di rotazione del tetramino e del tetramino flippato
+           ruotiamo il tetramino e la scena (anche quelli flippati)
 
         4. troviamo quale delle maschere di scena ruotatate fitta meglio
            ruotiamo scene e scene_mask
 
-        4. calcoliamo la distanza c_scene - c_scheme (d)
+        5. calcoliamo la distanza c_scene - c_scheme (d)
            trasliamo scene e scene_mask
-
-        5. rotazione
 
         6. copiamo e incolliamo il tetramino sull'immagine
 %}
