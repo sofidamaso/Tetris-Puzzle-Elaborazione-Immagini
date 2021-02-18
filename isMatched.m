@@ -8,8 +8,8 @@
 
 function out_match = isMatched(match_list,scene_label,scheme_label)
 
-disp=ones(max(max(scene_label)));
-disp_sch = ones(max(max(scheme_label)));
+disp=ones(max(max(scene_label)));       %disponibilità pezzi della scena
+disp_sch = ones(max(max(scheme_label)));        %disponibilità pezzi dello schema
 match=zeros(max(max(scheme_label)),max(max(scene_label)));
 
 for i=1 : size(match_list,2)   %scorro le pezzi dello schema
