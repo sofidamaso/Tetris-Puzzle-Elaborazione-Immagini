@@ -2,7 +2,7 @@
 %ogni immagine rappresenta una classe
 function signatures = train_scheme()
    
-    tic
+    
     D = 'training_schema';
     S = dir(fullfile(D,'*.jpg')); % pattern to match filenames.
     
@@ -13,8 +13,7 @@ function signatures = train_scheme()
         signatures{k} = tmp{1};
         a = 1;
     end
-    toc
-end
+  end
 
 
 function signatures = train_image(im)
