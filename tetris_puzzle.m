@@ -7,6 +7,7 @@
 
 function out = tetris_puzzle(scene,scheme)
 
+scene = im2double(scene);
 scheme = im2double(scheme);
 
 % segmentazione 
@@ -31,7 +32,6 @@ match = scheme_scene_match_mindist(training_class,scheme_signatures,scene_signat
 matches = isMatched(match,scene_labels,scheme_labels);
 
 % posizionamento
-scene = im2double(scene);
 
 for i = 1:size(matches,1)
     for h = 1:size(matches,2)
