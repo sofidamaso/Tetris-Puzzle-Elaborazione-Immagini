@@ -11,8 +11,9 @@ function out_labels = scheme_labelling(bw)
 tmp_lab = bwlabel(bw);
 n_label = max(max(tmp_lab));
 
-%la label con più perimetro comune alle righe nere (assumo?) sia lo
+%la label con più perimetro comune alle righe nere è lo
 %sfondo bianco esterno
+
 %calcolo i perimetri comuni alle righe nere
 common_perimeters = zeros(n_label);
 
@@ -69,4 +70,3 @@ function common_perimeter = count_common_perimeter4c(label_im,label)
 
 end
 
-% TODO (magari conviene fare un filtraggio sulla segmentazione es. mediano?)
