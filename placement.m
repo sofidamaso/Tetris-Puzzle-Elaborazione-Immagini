@@ -94,9 +94,9 @@ rotations_flipped = zeros(4,1);
 % centroide schema
 c_scheme = int32(compute_centroid(scheme_mask));
 
-for i = 0:3
+for i = 0:1
     
-    tmp = imrotate(scene_mask,90*i,'crop');
+    tmp = imrotate(scene_mask,180*i,'crop');
     c_tmp = int32(compute_centroid(tmp));
     d = c_scheme - c_tmp;
     tmp = imtranslate(tmp,d);
@@ -104,7 +104,7 @@ for i = 0:3
     rotations(i+1) = sum(sum(scheme_mask | not(tmp)));
     
     % flipped
-    tmp_flipped = imrotate(scene_mask_flipped,90*i,'crop');
+    tmp_flipped = imrotate(scene_mask_flipped,180*i,'crop');
     c_tmp_flipped = int32(compute_centroid(tmp_flipped));
     d_f = c_scheme - c_tmp_flipped;
     tmp_flipped = imtranslate(tmp_flipped,d_f);
@@ -117,11 +117,11 @@ i = find(rotations == max(rotations))-1;
 i_flipped = find(rotations_flipped == max(rotations_flipped))-1;
 
 if max(rotations) > max(rotations_flipped)
-    scene_mask = imrotate(scene_mask,90*i,'crop');
-    scene = imrotate(scene,90*i,'crop');
+    scene_mask = imrotate(scene_mask,180*i,'crop');
+    scene = imrotate(scene,180*i,'crop');
 else
-    scene_mask = imrotate(scene_mask_flipped,90*i_flipped,'crop');
-    scene = imrotate(scene_flipped,90*i_flipped,'crop');
+    scene_mask = imrotate(scene_mask_flipped,180*i_flipped,'crop');
+    scene = imrotate(scene_flipped,180*i_flipped,'crop');
 end
 
 % traslazione
