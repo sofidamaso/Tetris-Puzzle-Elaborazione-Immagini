@@ -36,14 +36,14 @@ mask = (reshape(mask,r,c,1));
 mask = not(mask);
 
 % chiude le forme che rimangono aperte (es i rettangoli
-% bianchi in alcunu casi)
+% bianchi in alcuni casi)
 mask = imclose(mask,strel('disk',3));
 
 % riempie i buchi generati
 mask = imfill(mask,'holes');
 
 % erode "aggressiva" che permette di pulire le forme da eventuale
-% bordo rimasto attaccato
+% bordo in eccesso
 mask = imerode(mask,strel('disk',17));
 
 % applico sauovola sul canale V per eliminare le ombre (le ombre meno scure non
