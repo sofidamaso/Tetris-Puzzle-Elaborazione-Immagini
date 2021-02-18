@@ -1,4 +1,4 @@
-%codice laboratorio 6
+% Calcola la matrice di confusione come mostrato a laboratorio
 function out=confmat(gt,predicted)
 
   [cm_raw,order]=confusionmat(gt(:),predicted(:));
