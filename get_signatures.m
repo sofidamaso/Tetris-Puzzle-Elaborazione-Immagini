@@ -37,7 +37,7 @@ for i = 1 : max(max(label_image))
     distances = sqrt((x - centroid_x).^2 + (y - centroid_y).^2);  
 
     % ricampiono il vettore distanza per avere esattamente 100 elementi
-    % ho usato l'interpolazione
+    % si utilizza l'interpolazione
     s = size(distances,1)/100;
 
     for r = 1 : 100
