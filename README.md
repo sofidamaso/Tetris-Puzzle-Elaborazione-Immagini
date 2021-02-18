@@ -3,4 +3,9 @@
 
 Nel gioco Puzzle Tetris vi sono diverse figure geometriche chiamate tetramini che possono essere combinate fra loro. L’obiettivo del gioco è comporre uno schema senza buchi.
 
-Per avviare l’applicazione, eseguire la funzione `puzzle_tetris.m` inserendo come input un'immagine di scena e un'immagine dello schema.
+Per avviare l’applicazione, eseguire la funzione `tetris_puzzle.m` inserendo come input un'immagine di scena e un'immagine dello schema.
+
+Esempio:
+```matlab
+>> tetris_puzzle(imread('scene/P01.jpg'),imread('scheme/S03.jpg'));
+```
