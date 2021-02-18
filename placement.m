@@ -44,6 +44,7 @@ scene_mask = imresize(scene_mask,sqrt(scale));
 % controlli ridemensioni e crop
 if scale < 1 % controllo su scena più piccola dello schema 
     
+    % riempie la parte vuota dell'immagine con pixel neri
     tmp_scene = zeros(size(scheme));
     tmp_scene_mask = zeros(size(scheme_mask));
 
@@ -53,7 +54,14 @@ if scale < 1 % controllo su scena più piccola dello schema
     scene = tmp_scene;
     scene_mask = logical(tmp_scene_mask);
     
-    % spostare tetramino al centro
+    % sposta tetramino al centro
+    c_scene = int32(compute_centroid(scene_mask));
+
+    center = int32(ceil(size(scene_mask)/2));
+    center = [center(2),center(1)];
+    d = center - c_scene;
+    scene_mask = imtranslate(scene_mask,d);
+    scene = imtranslate(scene,d);
     
 elseif scale > 1   
     [scene,scene_mask] = centroid_crop(scene,scene_mask,size(scheme_mask));
