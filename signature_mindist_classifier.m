@@ -1,6 +1,12 @@
 %{
-    SIGNATURE_MINDIST_CLASSIFIER
-
+    SIGNATURE_MINDIST_CLASSIFIER 
+    Input: training_signatures = classi di training(signatures)
+    	   test_signatures = signatures di tutte le label dell'immagine da classificare
+    output: array di match dove match(i) = classe assegnata alla label i dell'immagine
+    
+    funzionamento: per ogni label dell'immagine calcolo la distanza  da ogni classe.
+    	           la distanza tra label e classe è definita nel file signature_matching.
+    	           Associo la classe con distanza minima.
 %}
 
 function label_class_list = signature_mindist_classifier(training_signatures,test_signatures)
