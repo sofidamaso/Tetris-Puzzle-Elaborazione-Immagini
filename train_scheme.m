@@ -1,7 +1,11 @@
-%leggo le immagini di training e calcolo le signature per ogni immagine
-%ogni immagine rappresenta una classe
+%{
+    TRAIN_SCHEME
+    
+    Legge le immagini di training e calcola le signature per ogni immagine.
+    Ogni immagine rappresenta una classe.
+%}
+
 function signatures = train_scheme()
-   
     
     D = 'training_schema';
     S = dir(fullfile(D,'*.jpg')); % pattern to match filenames.
@@ -14,7 +18,6 @@ function signatures = train_scheme()
         a = 1;
     end
   end
-
 
 function signatures = train_image(im)
     imgr = im;
