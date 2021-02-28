@@ -28,7 +28,6 @@ scheme_signatures = get_signatures(scheme_labels);
 load 'training_class.mat';
 match = scheme_scene_match_mindist(training_class,scheme_signatures,scene_signatures);
 
-
 matches = isMatched(match,scene_labels,scheme_labels);
 
 % posizionamento
