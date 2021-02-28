@@ -88,8 +88,8 @@ scene_flipped = imrotate(scene_flipped, -(scheme_angle - scene_flipped_angle),'c
 scene_mask_flipped = imrotate(scene_mask_flipped, -(scheme_angle - scene_flipped_angle),'crop');
 
 % vettori delle rotazioni
-rotations = zeros(4,1);
-rotations_flipped = zeros(4,1);
+rotations = zeros(2,1);
+rotations_flipped = zeros(2,1);
 
 % centroide schema
 c_scheme = int32(compute_centroid(scheme_mask));
